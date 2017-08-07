@@ -22,13 +22,16 @@ export class DEPlusinsListUIHandler {
 
   private mainElement: HTMLElement;
 
-  private offlineButton: HTMLElement;
+  //private offlineButton: HTMLElement;
   private offlineSettingsContainer: HTMLElement;
   private offlineSDKLocation: HTMLElement;
   private offlineButtonSDKPathSelector: HTMLElement;
+  private offlineToggleInput: HTMLElement;
 
   private btnViperaRegistrySelector:HTMLElement;
   private btnDefaultRegistrySelector:HTMLElement;
+  private npmSettingsSettingsContainer:HTMLElement;
+  private currentNPMRegistry:HTMLElement;
 
   private isOfflineSDK:boolean = false;
 
@@ -37,6 +40,24 @@ export class DEPlusinsListUIHandler {
   }
 
   private initUI(){
+
+    // offline toggle
+    this.offlineToggleInput = createElement('input',{
+        className: 'input-toggle'
+    })
+    this.offlineToggleInput.setAttribute('type','checkbox')
+    let offlineToggle = createElement('label',{
+      elements: [
+        this.offlineToggleInput,
+        createText('Offline SDK')
+      ],
+      className: 'input-label deweb-dynamicengine-plugins-offlinemode-toggle-label'
+    })
+    this.offlineToggleInput.addEventListener('change', ()=>{
+      this.toggleOfflineMode();
+    })
+    // offline toggle input
+
 
     // Offline Management
     this.offlineSDKLocation = createElement('span',{
@@ -52,20 +73,8 @@ export class DEPlusinsListUIHandler {
       ],
       className : 'deweb-dynamicengine-plugins-offlinemode-container'
     });
-    this.offlineSettingsContainer.style.visibility = "hidden"
+    this.showSDKSettings(false)
 
-    this.offlineButton = createElement('button',{
-      elements: [
-        createElement('span',{
-          className: 'icon icon-package'
-        }),
-        createText('Offline SDK')
-      ],
-      className: 'inline-block btn'
-    })
-    this.offlineButton.addEventListener('click',()=>{
-      this.toggleOfflineMode();
-    })
     this.offlineButtonSDKPathSelector = createElement('button',{
       elements: [
         createElement('span',{
@@ -103,13 +112,36 @@ export class DEPlusinsListUIHandler {
     })
     this.btnDefaultRegistrySelector.style.display = "inline-block"
 
+    this.currentNPMRegistry = createElement('span',{
+      elements: [
+        createText("https://hhfjdkshfjdskh"), //TODO!!
+      ],
+      className: 'deweb-dynamicengine-plugins-offlinemode-currentpath highlight'
+    })
+    this.npmSettingsSettingsContainer = createElement('div',{
+      elements: [
+        createText("Current NPM Registry: "),
+        this.currentNPMRegistry,
+      ],
+      className : 'deweb-dynamicengine-plugins-offlinemode-container'
+    });
+    this.showNPMRegistrySettings(true)
+    // end NPM registry management
+
+
+    //status container
+    let statusContainer = createElement('div',{
+      elements: [
+        this.offlineSettingsContainer,
+        this.npmSettingsSettingsContainer
+      ]
+    })
 
 
     let toolbarContainer = createElement('div',{
       elements: [
-        this.offlineButton,this.offlineButtonSDKPathSelector,this.btnViperaRegistrySelector,this.btnDefaultRegistrySelector,
-
-        this.offlineSettingsContainer
+        offlineToggle, this.offlineButtonSDKPathSelector,this.btnViperaRegistrySelector,this.btnDefaultRegistrySelector,
+        statusContainer
       ],
       className: 'block'
     })
@@ -120,18 +152,19 @@ export class DEPlusinsListUIHandler {
   }
 
   private toggleOfflineMode(){
-    this.offlineButton.classList.toggle('selected')
     this.isOfflineSDK = !this.isOfflineSDK;
     if (this.isOfflineSDK){
-      this.offlineSettingsContainer.style.visibility = "visible"
       this.offlineButtonSDKPathSelector.style.display = "inline-block"
       this.btnViperaRegistrySelector.style.display = "none"
       this.btnDefaultRegistrySelector.style.display = "none"
+      this.showSDKSettings(true);
+      this.showNPMRegistrySettings(false);
     } else {
-      this.offlineSettingsContainer.style.visibility = "hidden"
       this.offlineButtonSDKPathSelector.style.display = "none"
       this.btnViperaRegistrySelector.style.display = "inline-block"
       this.btnDefaultRegistrySelector.style.display = "inline-block"
+      this.showSDKSettings(false);
+      this.showNPMRegistrySettings(true);
     }
   }
 
@@ -139,5 +172,20 @@ export class DEPlusinsListUIHandler {
     return this.mainElement;
   }
 
+  private showNPMRegistrySettings(show:boolean){
+    if (!show){
+      this.npmSettingsSettingsContainer.style.display = "block"
+    } else {
+      this.npmSettingsSettingsContainer.style.display = "none"
+    }
+  }
+
+  private showSDKSettings(show:boolean){
+    if (!show){
+      this.offlineSettingsContainer.style.display = "block"
+    } else {
+      this.offlineSettingsContainer.style.display = "none"
+    }
+  }
 
 }
