@@ -1,0 +1,99 @@
+{
+  "name": "de-workbench-vipera-extension",
+  "version": "0.0.1",
+  "author": "Dynamic Engine Team @ Vipera Plc",
+  "description": "Dynamic Engine Workbench Vipera Extension",
+  "keywords": [
+    "javascript",
+    "debugger",
+    "debug",
+    "atom",
+    "repl",
+    "bugs",
+    "chrome",
+    "browser",
+    "node",
+    "breakpoint",
+    "console",
+    "vipera",
+    "dynamicengine",
+    "cordova",
+    "android"
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/github-vipera/de-workbench",
+  "main": "./lib/main",
+  "showWelcome": true,
+  "scripts": {
+    "start": "tsc -w",
+    "compile": "tsc"
+  },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "consumedServices": {
+    "de-wb-logger" : {
+      "versions": {
+        "*": "consumeLogger"
+      }
+    },
+    "de-wb-plugins-provider": {
+      "versions": {
+        "*": "consumeCordovaPluginsProvider"
+      }
+    }
+  },
+  "configSchema": {
+    "toolbarStyle": {
+      "title": "Toolbar Style",
+      "description": "Change toolbar panel position.",
+      "type": "string",
+      "default": "TopPanel",
+      "enum": [
+        {
+          "value": "TopPanel",
+          "description": "Top"
+        },
+        {
+          "value": "BottomPanel",
+          "description": "Bottom"
+        },
+        {
+          "value": "HeaderPanel",
+          "description": "Title"
+        }
+      ]
+    },
+    "showToolbarIcon": {
+      "title": "DE WB Icon",
+      "description": "Show DE Workbench icon on toolbar.",
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "package-deps": [
+    "de-workbench"
+  ],
+  "dependencies": {
+    "atom-package-deps": "^4.6.0",
+    "atom-select-list": "^0.2.0",
+  },
+  "devDependencies": {
+    "@types/atom": "^0.0.38",
+    "@types/lodash": "^4.14.62",
+    "@types/node": "^7.0.8",
+    "typescript": "^2.3.0"
+  },
+  "de-wb-vipera-extension": [
+    {
+      "schemeName": "Develop",
+      "pluginName": "Node.js",
+      "pluginOptions": {
+        "binaryPath": "",
+        "portNumber": "5858",
+        "lauchArguments": [],
+        "environmentVariables": {}
+      }
+    }
+  ]
+}

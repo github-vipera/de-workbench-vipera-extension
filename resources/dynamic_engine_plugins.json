@@ -1,0 +1,40 @@
+{
+  "plugins": [
+    {
+        "name": "paperino",
+        "id": "paperino",
+        "version": "1.0.2",
+        "description": "Questo è un plugin inutile",
+        "installed": false,
+        "author": "Vipera Plc",
+        "homepage": "https://www.vipera.com",
+        "license": "Vipera Commercial",
+        "repository": "local",
+        "repositoryType": "private",
+        "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+        "rating": 10,
+        "platforms": [
+          { "name": "ios", "displayName" : "iOS"},
+          { "name": "android", "displayName" : "Android"}
+        ]
+    },
+    {
+        "name": "pippo",
+        "id": "pippo",
+        "version": "2.1.0",
+        "description": "Questo è un plugin inutile",
+        "installed": false,
+        "author": "Vipera Plc",
+        "homepage": "https://www.vipera.com",
+        "license": "Vipera Commercial",
+        "repository": "local",
+        "repositoryType": "private",
+        "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+        "rating": 10,
+        "platforms": [
+          { "name": "ios", "displayName" : "iOS"},
+          { "name": "android", "displayName" : "Android"}
+        ]
+    }
+  ]
+}
