@@ -8,6 +8,7 @@
 
 import { LoggerService } from '../Logger'
 import { DEWBResourceManager } from '../utils/DEWBResourceManager'
+import { DEPlusinsListUIHandler } from './DEPluginsListUIHandler'
 
 export interface CordovaPluginsProviderService {
   getCordovaPlugins():Array<any>;
@@ -15,19 +16,13 @@ export interface CordovaPluginsProviderService {
   getExtendedUI():HTMLElement;
 }
 
-export class CordovaPluginsProvider implements CordovaPluginsProviderService {
+export class DEPluginsProvider implements CordovaPluginsProviderService {
 
-  private static instance:CordovaPluginsProvider;
+  private uiHandler:DEPlusinsListUIHandler;
 
-  private constructor() {
+  public constructor() {
     LoggerService.debug("Creating CordovaPluginsProvidersManager...")
-  }
 
-  static getInstance() {
-      if (!CordovaPluginsProvider.instance) {
-          CordovaPluginsProvider.instance = new CordovaPluginsProvider();
-      }
-      return CordovaPluginsProvider.instance;
   }
 
   public getProviderName():string {
@@ -82,7 +77,10 @@ export class CordovaPluginsProvider implements CordovaPluginsProviderService {
   }
 
   getExtendedUI():HTMLElement {
-    return null;
+    if (!this.uiHandler){
+      this.uiHandler = new DEPlusinsListUIHandler();
+    }
+    return this.uiHandler.element()
   }
-
+  
 }

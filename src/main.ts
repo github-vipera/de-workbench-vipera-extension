@@ -10,7 +10,7 @@ const { CompositeDisposable } = require('atom')
 declare function require(moduleName: string): any;
 
 import { LoggerService } from './Logger'
-import { CordovaPluginsProvider } from './pluginsProvider/DEPluginsProvider'
+import { DEPluginsProviderFactory } from './pluginsProvider/DEPluginsProviderFactory'
 
 export default {
 
@@ -46,7 +46,7 @@ export default {
   consumeCordovaPluginsProvider: function (dewebCordovaPluginsProviderManager) {
     console.log("Consuming DE WB plugin manager...");
     this.dewebCordovaPluginsProviderManager = dewebCordovaPluginsProviderManager;
-    this.dewebCordovaPluginsProviderManager.registerProvider(CordovaPluginsProvider.getInstance());
+    this.dewebCordovaPluginsProviderManager.registerProviderFactory(DEPluginsProviderFactory.getInstance());
     console.log("Consuming DE WB plugin manager...END");
   },
 
