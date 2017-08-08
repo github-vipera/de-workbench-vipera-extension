@@ -74,7 +74,7 @@
       "title": "Default NPM Registry",
       "description": "Default NPM Registry",
       "type": "string",
-      "default": "https://registry.npmjs.org/'"
+      "default": "https://registry.npmjs.org/"
     },
     "UseOfflineSDK": {
       "title": "DE Offline SDK",
