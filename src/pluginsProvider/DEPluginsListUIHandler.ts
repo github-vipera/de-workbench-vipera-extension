@@ -18,8 +18,11 @@
    createTextEditor
  } from '../element/index';
 
- import { DESDKRegistry } from './DESDKRegistry'
- import { EventBus } from '../utils/EventBus'
+import { DESDKRegistry } from './DESDKRegistry'
+import { EventBus } from '../utils/EventBus'
+const remote = require('remote');
+const dialog = remote.require('electron').dialog;
+const fs = require('fs');
 
 export class DEPlusinsListUIHandler {
 
@@ -36,6 +39,7 @@ export class DEPlusinsListUIHandler {
   private npmSettingsSettingsContainer:HTMLElement;
   private currentNPMRegistry:HTMLElement;
 
+  private actionListener:Function;
 
   constructor(){
     this.initUI();
@@ -65,7 +69,7 @@ export class DEPlusinsListUIHandler {
     // Offline Management
     this.offlineSDKLocation = createElement('span',{
       elements: [
-        createText("/pippo/pluto/paperino"), //TODO!!
+        createText("/"),
       ],
       className: 'deweb-dynamicengine-plugins-offlinemode-currentpath highlight'
     })
@@ -84,6 +88,9 @@ export class DEPlusinsListUIHandler {
         createText('Set Vipera SDK location')
       ],
       className: 'inline-block btn'
+    })
+    this.offlineButtonSDKPathSelector.addEventListener('click',()=>{
+      this.selectSDKOfflinePath();
     })
     // Offline Management
 
@@ -157,16 +164,15 @@ export class DEPlusinsListUIHandler {
 
     EventBus.getInstance().subscribe(EventBus.EVT_CONFIG_CHANGED,()=>{
       this.updateUI();
+      this.notifyChanges();
     });
 
   }
 
-  /**
-  private toggleOfflineMode(){
-    this.isOfflineSDK = !this.isOfflineSDK;
-    this.updateUI();
+  public addActionListener(actionListener:Function):DEPlusinsListUIHandler{
+    this.actionListener = actionListener;
+    return this;
   }
-  **/
 
   private updateUI(){
     this.offlineSDKLocation.innerText = DESDKRegistry.getInstance().getOfflineSDKPath();
@@ -221,6 +227,24 @@ export class DEPlusinsListUIHandler {
   public setOfflineSDK(offline:boolean){
     DESDKRegistry.getInstance().setOfflineSDK(offline);
     this.updateUI();
+  }
+
+  private selectSDKOfflinePath(){
+    var sdkPath = dialog.showOpenDialog({properties: ['openDirectory']});
+    if(!sdkPath){
+      return;
+    }
+    if(!fs.existsSync(sdkPath[0])){
+      atom.notifications.addError("Invalid sdk path");
+      return;
+    }
+    DESDKRegistry.getInstance().setOfflineSDKPath(sdkPath[0]);
+  }
+
+  private notifyChanges(){
+    if (this.actionListener){
+      this.actionListener('reloadPluginsList')
+    }
   }
 
 }

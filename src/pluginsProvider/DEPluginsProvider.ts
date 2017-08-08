@@ -78,9 +78,13 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
 
   getExtendedUI():HTMLElement {
     if (!this.uiHandler){
-      this.uiHandler = new DEPlusinsListUIHandler();
+      this.uiHandler = new DEPlusinsListUIHandler().addActionListener((action)=>{
+          // TODO!!
+          // reload plugins and notify list changes
+          console.info("TODO!! notify list changes")
+      });
     }
     return this.uiHandler.element()
   }
-  
+
 }
