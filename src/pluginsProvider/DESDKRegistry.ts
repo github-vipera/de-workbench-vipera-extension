@@ -12,7 +12,7 @@ export class DESDKRegistry {
 
   private static instance:DESDKRegistry;
 
-  private offlineSDK:boolean;
+  private offlineSDK:boolean = false;
   private offlineSDKPath:string = "Not defined";
 
   private constructor() {
@@ -44,12 +44,12 @@ export class DESDKRegistry {
 
   getCurrentNPMRegistry():string {
       //TODO!!
-      return "";
+      return "Not defined";
   }
 
   restoreDefaultNPMRegistry():string {
       //TODO!!
-      return "";
+      return "Not defined";
   }
 
   setViperaNPMRegistry():string {

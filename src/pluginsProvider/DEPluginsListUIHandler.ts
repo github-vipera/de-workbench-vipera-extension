@@ -55,8 +55,9 @@ export class DEPlusinsListUIHandler {
       ],
       className: 'input-label deweb-dynamicengine-plugins-offlinemode-toggle-label'
     })
-    this.offlineToggleInput.addEventListener('change', ()=>{
-      this.toggleOfflineMode();
+    this.offlineToggleInput.addEventListener('change', (evt:any)=>{
+      let checkValue = evt.srcElement.checked;
+      this.setOfflineSDK(checkValue);
     })
     // offline toggle input
 
@@ -149,19 +150,22 @@ export class DEPlusinsListUIHandler {
     this.setOfflineSDK(DESDKRegistry.getInstance().isOfflineSDK())
   }
 
+  /**
   private toggleOfflineMode(){
     this.isOfflineSDK = !this.isOfflineSDK;
     this.updateUI();
   }
+  **/
 
   private updateUI(){
     this.offlineSDKLocation.innerText = DESDKRegistry.getInstance().getOfflineSDKPath();
+    this.currentNPMRegistry.innerText = DESDKRegistry.getInstance().getCurrentNPMRegistry();
+    let checkbox:any = this.offlineToggleInput;
+    checkbox.checked = this.isOfflineSDK
     if (this.isOfflineSDK){
-      this.offlineToggleInput.setAttribute("checked","true");
       this.showSDKSettings(true);
       this.showNPMRegistrySettings(false);
     } else {
-      this.offlineToggleInput.setAttribute("checked","false");
       this.showSDKSettings(false);
       this.showNPMRegistrySettings(true);
     }
@@ -172,7 +176,7 @@ export class DEPlusinsListUIHandler {
   }
 
   private showNPMRegistrySettings(show:boolean){
-    if (!show){
+    if (show){
       this.npmSettingsSettingsContainer.style.display = "block"
       this.btnViperaRegistrySelector.style.display = "inline-block"
       this.btnDefaultRegistrySelector.style.display = "inline-block"
@@ -184,16 +188,25 @@ export class DEPlusinsListUIHandler {
   }
 
   private showSDKSettings(show:boolean){
-    if (!show){
-      this.offlineSettingsContainer.style.display = "inline-block"
+    if (show){
+      //this.offlineSettingsContainer.classList.add('bounceOutRight')
+      //this.offlineSettingsContainer.classList.add('animated')
+      this.offlineSettingsContainer.style.display = "block"
+      //this.offlineButtonSDKPathSelector.classList.add('bounceOutRight')
+      //this.offlineButtonSDKPathSelector.classList.add('animated')
       this.offlineButtonSDKPathSelector.style.display = "inline-block"
     } else {
+      //this.offlineSettingsContainer.classList.add('bounceInRight')
+      //this.offlineSettingsContainer.classList.add('animated')
       this.offlineSettingsContainer.style.display = "none"
+      //this.offlineButtonSDKPathSelector.classList.add('bounceInRight')
+      //this.offlineButtonSDKPathSelector.classList.add('animated')
       this.offlineButtonSDKPathSelector.style.display = "none"
     }
   }
 
   public setOfflineSDK(offline:boolean){
+    DESDKRegistry.getInstance().setOfflineSDK(offline);
     this.isOfflineSDK = offline;
     this.updateUI();
   }
