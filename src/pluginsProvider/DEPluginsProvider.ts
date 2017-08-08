@@ -9,6 +9,7 @@
 import { LoggerService } from '../Logger'
 import { DEWBResourceManager } from '../utils/DEWBResourceManager'
 import { DEPlusinsListUIHandler } from './DEPluginsListUIHandler'
+import { DESDKRegistry } from './DESDKRegistry'
 
 export interface CordovaPluginsProviderService {
   getCordovaPlugins():Array<any>;
@@ -33,7 +34,13 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
   getCordovaPlugins():Array<any>{
     var ret = [];
 
-    ret = DEWBResourceManager.getJSONResource('dynamic_engine_plugins.json')["plugins"];
+    if (DESDKRegistry.getInstance().isOfflineSDK()){
+      //read from local path
+      ret = DESDKRegistry.getInstance().getLocalSDKPlugins()
+    } else {
+      //read from URI
+      ret = DEWBResourceManager.getJSONResource('dynamic_engine_plugins.json')["plugins"];
+    }
 
     return ret;
   }

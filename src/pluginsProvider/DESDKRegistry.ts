@@ -11,6 +11,9 @@ import { EventBus } from '../utils/EventBus'
 
 const registryUrl = require('registry-url')
 const spawn = require('child_process').spawn;
+const fs = require('fs')
+const path = require('path');
+const _ = require('lodash');
 
 export class DESDKRegistry {
 
@@ -111,6 +114,85 @@ export class DESDKRegistry {
       cmd = cmd + ".cmd";
     }
     return cmd;
+  }
+
+  public getLocalSDKPlugins(){
+    let pluginArray= new Array();
+    let sdkLocation = this.getOfflineSDKPath()
+    let pluginDirectories = this.getDirectories(sdkLocation);
+    _.forEach(pluginDirectories,(singlePath) => {
+      let pluginInfo = this.loadLocalPluginInfo(path.join(sdkLocation, singlePath));
+      if(!pluginInfo){
+        console.error("Invalid plugin dir:",singlePath);
+        return;
+      }
+      pluginArray.push(pluginInfo)
+    });
+    return pluginArray;
+  }
+
+  private getDirectories (srcpath) {
+    return fs.readdirSync(srcpath)
+      .filter(file => fs.lstatSync(path.join(srcpath, file)).isDirectory())
+  }
+
+  private loadLocalPluginInfo(dir){
+    var completePath = path.join(dir, 'package.json');
+    if(!fs.existsSync(completePath)){
+      return undefined;
+    }
+    var packageJSON = JSON.parse(fs.readFileSync(completePath, 'utf8'));
+    if(!packageJSON.cordova){
+      return undefined;
+    }
+    console.log("Found plugin: ", packageJSON)
+    return {
+      "id": packageJSON.name,
+      "name": packageJSON.name,
+      "url": packageJSON.repository != undefined ? packageJSON.repository.url : "",
+      "repoUrl": packageJSON.repository != undefined ? packageJSON.repository.url : "",
+      "version": packageJSON.version,
+      "description": packageJSON.description,
+      "lastUpdate": "",
+      installed: false,
+      repository: "local",
+      repositoryType: "private",
+      license: packageJSON.license,
+      author: packageJSON.author,
+      platforms: this.readAvailablePlatforms(packageJSON)
+      //homepage: "https://&www.vipera.com",
+      //lastUpdateTime: ""+ new Date(),
+      //rating: 10,
+      //platforms: [this.getPlatformDesc('ios'), this.getPlatformDesc('android')]
+    };
+  }
+
+
+  private readAvailablePlatforms(jsonRaw:any):Array<string>{
+    if (!jsonRaw.keywords){
+      return [];
+    }
+    let ret = new Array();
+    if (this.isPlatformSupported(jsonRaw,'ios')){
+      ret.push({ name:"ios", displayName: "iOS" })
+    }
+    if (this.isPlatformSupported(jsonRaw,'android')){
+      ret.push({ name:"android", displayName: "Android" })
+    }
+    if (this.isPlatformSupported(jsonRaw,'browser')){
+      ret.push({ name:"browser", displayName: "Browser" })
+    }
+    return ret
+  }
+
+  private isPlatformSupported(jsonRaw:any, platform:string):boolean {
+    if (_.indexOf(jsonRaw.keywords, 'cordova-' + platform )>-1){
+      return true;
+    }
+    else if (_.indexOf(jsonRaw.keywords, platform )>-1){
+      return true;
+    }
+    else return false;
   }
 
 }

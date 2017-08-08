@@ -96,7 +96,8 @@
     "atom-package-deps": "^4.6.0",
     "atom-select-list": "^0.2.0",
     "fs": "0.0.1-security",
-    "registry-url": "^3.1.0"
+    "registry-url": "^3.1.0",
+    "lodash": "^4.17.3"
   },
   "devDependencies": {
     "@types/atom": "^0.0.38",
