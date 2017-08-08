@@ -12,9 +12,20 @@ declare function require(moduleName: string): any;
 import { LoggerService } from './Logger'
 import { DEPluginsProviderFactory } from './pluginsProvider/DEPluginsProviderFactory'
 
+
 export default {
 
   dewebCordovaPluginsProviderManager: null,
+
+
+  config:{
+      ViperaNPMRegistry: {
+        title: 'Vipera NPM Registry',
+        description: 'Vipera NPM Registry',
+        type: 'string',
+        default: "https://npm-proxy.fury.io/Mr43aEGkxz47vyf7VZ_y/vipera-npm-registry/"
+      }
+  },
 
   activate (state: any) {
     console.log("DEWBEXT activated.");

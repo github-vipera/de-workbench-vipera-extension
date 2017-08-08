@@ -7,6 +7,9 @@
  */
 
 import { LoggerService } from '../Logger'
+import { EventBus } from '../utils/EventBus'
+
+const registryUrl = require('registry-url')
 
 export class DESDKRegistry {
 
@@ -17,6 +20,21 @@ export class DESDKRegistry {
 
   private constructor() {
     LoggerService.debug("Creating DESDKRegistry...")
+
+    //listening for changes
+    atom.config["observe"]('de-workbench-vipera-extension.UseOfflineSDK', (value)=>{
+      this.notifyChanges()
+    });
+    atom.config["observe"]('de-workbench-vipera-extension.OfflineSDKPath', (value)=>{
+      this.notifyChanges()
+    });
+    atom.config["observe"]('de-workbench-vipera-extension.DefaultNPMRegistry', (value)=>{
+      this.notifyChanges()
+    });
+    atom.config["observe"]('de-workbench-vipera-extension.ViperaNPMRegistry', (value)=>{
+      this.notifyChanges()
+    });
+
   }
 
   static getInstance() {
@@ -27,34 +45,44 @@ export class DESDKRegistry {
   }
 
   isOfflineSDK():boolean {
-    return this.offlineSDK;
+    return  atom.config.get('de-workbench-vipera-extension.UseOfflineSDK')
   }
 
   setOfflineSDK(offline:boolean) {
-    this.offlineSDK = offline;
+    atom.config["set"]('de-workbench-vipera-extension.UseOfflineSDK', offline)
   }
 
   getOfflineSDKPath():string {
-    return this.offlineSDKPath;
+    return  atom.config.get('de-workbench-vipera-extension.OfflineSDKPath')
   }
 
   setOfflineSDKPath(path:string){
-    this.offlineSDKPath = path;
+    return atom.config["set"]('de-workbench-vipera-extension.OfflineSDKPath', path)
   }
 
   getCurrentNPMRegistry():string {
-      //TODO!!
-      return "Not defined";
+    return registryUrl();
   }
 
   restoreDefaultNPMRegistry():string {
-      //TODO!!
-      return "Not defined";
+    // get from configuration
+    let defaultNPMRegistry = atom.config.get('de-workbench-vipera-extension.DefaultNPMRegistry')
+    this.setNPMRegistry(defaultNPMRegistry)
+    return defaultNPMRegistry;
   }
 
   setViperaNPMRegistry():string {
-      //TODO!!
-      return "";
+      // get from configuration
+      let viperaNPMRegistry = atom.config.get('de-workbench-vipera-extension.ViperaNPMRegistry')
+      this.setNPMRegistry(viperaNPMRegistry)
+      return viperaNPMRegistry;
+  }
+
+  private setNPMRegistry(url:string){
+  }
+
+  notifyChanges(){
+    EventBus.getInstance().publish(EventBus.EVT_CONFIG_CHANGED);
   }
 
 }
