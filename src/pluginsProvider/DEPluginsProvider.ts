@@ -19,6 +19,7 @@ export interface CordovaPluginsProviderService {
 export class DEPluginsProvider implements CordovaPluginsProviderService {
 
   private uiHandler:DEPlusinsListUIHandler;
+  private eventHandler:Function;
 
   public constructor() {
     LoggerService.debug("Creating CordovaPluginsProvidersManager...")
@@ -79,12 +80,18 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
   getExtendedUI():HTMLElement {
     if (!this.uiHandler){
       this.uiHandler = new DEPlusinsListUIHandler().addActionListener((action)=>{
-          // TODO!!
           // reload plugins and notify list changes
-          console.info("TODO!! notify list changes")
+          //TODO!! reload plugins
+          if (this.eventHandler){
+            this.eventHandler({ type: 'listChanged' })
+          }
       });
     }
     return this.uiHandler.element()
+  }
+
+  addEventHandler(handler:Function){
+    this.eventHandler = handler;
   }
 
 }

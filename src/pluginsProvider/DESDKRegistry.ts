@@ -10,6 +10,7 @@ import { LoggerService } from '../Logger'
 import { EventBus } from '../utils/EventBus'
 
 const registryUrl = require('registry-url')
+const spawn = require('child_process').spawn;
 
 export class DESDKRegistry {
 
@@ -17,9 +18,13 @@ export class DESDKRegistry {
 
   private offlineSDK:boolean = false;
   private offlineSDKPath:string = "Not defined";
+  private isWin:boolean;
+  private spawnRef:any = undefined;
 
   private constructor() {
     LoggerService.debug("Creating DESDKRegistry...")
+
+    this.isWin = /^win/.test(process.platform);
 
     //listening for changes
     atom.config["observe"]('de-workbench-vipera-extension.UseOfflineSDK', (value)=>{
@@ -67,22 +72,45 @@ export class DESDKRegistry {
   restoreDefaultNPMRegistry():string {
     // get from configuration
     let defaultNPMRegistry = atom.config.get('de-workbench-vipera-extension.DefaultNPMRegistry')
-    this.setNPMRegistry(defaultNPMRegistry)
+    this.installNPMRegistry(defaultNPMRegistry)
     return defaultNPMRegistry;
   }
 
-  setViperaNPMRegistry():string {
+  installViperaNPMRegistry():string {
       // get from configuration
       let viperaNPMRegistry = atom.config.get('de-workbench-vipera-extension.ViperaNPMRegistry')
-      this.setNPMRegistry(viperaNPMRegistry)
+      this.installNPMRegistry(viperaNPMRegistry)
       return viperaNPMRegistry;
-  }
-
-  private setNPMRegistry(url:string){
   }
 
   notifyChanges(){
     EventBus.getInstance().publish(EventBus.EVT_CONFIG_CHANGED);
+  }
+
+  public installNPMRegistry(registryURL:string){
+    var cmd = "npm";
+    cmd = this.prepareCommand(cmd);
+    this.spawnRef = spawn(cmd, ["set", "registry", registryURL], {});
+    this.spawnRef.stdout.on('data', (data) => {
+        LoggerService.info("[NPM Registry Set] " + data.toString())
+    });
+
+    this.spawnRef.stderr.on('data', (data) => {
+        LoggerService.error("[scriptTools] " + data.toString())
+    });
+
+    this.spawnRef.on('close', (code) => {
+        LoggerService.info('setNPMRegistry process exited with code ' + code)
+        this.spawnRef = undefined;
+        this.notifyChanges()
+    });
+  }
+
+  prepareCommand(cmd){
+    if (this.isWin){
+      cmd = cmd + ".cmd";
+    }
+    return cmd;
   }
 
 }

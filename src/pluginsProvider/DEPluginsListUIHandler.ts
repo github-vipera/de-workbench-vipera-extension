@@ -107,6 +107,9 @@ export class DEPlusinsListUIHandler {
       ],
       className: 'inline-block btn'
     })
+    this.btnViperaRegistrySelector.addEventListener('click',()=>{
+      DESDKRegistry.getInstance().installViperaNPMRegistry()
+    })
     this.btnDefaultRegistrySelector = createElement('button',{
       elements: [
         createElement('span',{
@@ -115,6 +118,9 @@ export class DEPlusinsListUIHandler {
         createText('Restore Default NPM Registry')
       ],
       className: 'inline-block btn'
+    })
+    this.btnDefaultRegistrySelector.addEventListener('click',()=>{
+      DESDKRegistry.getInstance().restoreDefaultNPMRegistry()
     })
 
     this.currentNPMRegistry = createElement('span',{
