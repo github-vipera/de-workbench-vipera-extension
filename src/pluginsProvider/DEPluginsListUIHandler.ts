@@ -18,6 +18,8 @@
    createTextEditor
  } from '../element/index';
 
+ import { DESDKRegistry } from './DESDKRegistry'
+
 export class DEPlusinsListUIHandler {
 
   private mainElement: HTMLElement;
@@ -73,8 +75,6 @@ export class DEPlusinsListUIHandler {
       ],
       className : 'deweb-dynamicengine-plugins-offlinemode-container'
     });
-    this.showSDKSettings(false)
-
     this.offlineButtonSDKPathSelector = createElement('button',{
       elements: [
         createElement('span',{
@@ -84,7 +84,6 @@ export class DEPlusinsListUIHandler {
       ],
       className: 'inline-block btn'
     })
-    this.offlineButtonSDKPathSelector.style.display = "none"
     // Offline Management
 
 
@@ -100,7 +99,6 @@ export class DEPlusinsListUIHandler {
       ],
       className: 'inline-block btn'
     })
-    this.btnViperaRegistrySelector.style.display = "inline-block"
     this.btnDefaultRegistrySelector = createElement('button',{
       elements: [
         createElement('span',{
@@ -110,7 +108,6 @@ export class DEPlusinsListUIHandler {
       ],
       className: 'inline-block btn'
     })
-    this.btnDefaultRegistrySelector.style.display = "inline-block"
 
     this.currentNPMRegistry = createElement('span',{
       elements: [
@@ -125,7 +122,6 @@ export class DEPlusinsListUIHandler {
       ],
       className : 'deweb-dynamicengine-plugins-offlinemode-container'
     });
-    this.showNPMRegistrySettings(true)
     // end NPM registry management
 
 
@@ -149,20 +145,23 @@ export class DEPlusinsListUIHandler {
     this.mainElement = createElement('div',{
       elements: [ toolbarContainer]
     })
+
+    this.setOfflineSDK(DESDKRegistry.getInstance().isOfflineSDK())
   }
 
   private toggleOfflineMode(){
     this.isOfflineSDK = !this.isOfflineSDK;
+    this.updateUI();
+  }
+
+  private updateUI(){
+    this.offlineSDKLocation.innerText = DESDKRegistry.getInstance().getOfflineSDKPath();
     if (this.isOfflineSDK){
-      this.offlineButtonSDKPathSelector.style.display = "inline-block"
-      this.btnViperaRegistrySelector.style.display = "none"
-      this.btnDefaultRegistrySelector.style.display = "none"
+      this.offlineToggleInput.setAttribute("checked","true");
       this.showSDKSettings(true);
       this.showNPMRegistrySettings(false);
     } else {
-      this.offlineButtonSDKPathSelector.style.display = "none"
-      this.btnViperaRegistrySelector.style.display = "inline-block"
-      this.btnDefaultRegistrySelector.style.display = "inline-block"
+      this.offlineToggleInput.setAttribute("checked","false");
       this.showSDKSettings(false);
       this.showNPMRegistrySettings(true);
     }
@@ -175,17 +174,28 @@ export class DEPlusinsListUIHandler {
   private showNPMRegistrySettings(show:boolean){
     if (!show){
       this.npmSettingsSettingsContainer.style.display = "block"
+      this.btnViperaRegistrySelector.style.display = "inline-block"
+      this.btnDefaultRegistrySelector.style.display = "inline-block"
     } else {
       this.npmSettingsSettingsContainer.style.display = "none"
+      this.btnViperaRegistrySelector.style.display = "none"
+      this.btnDefaultRegistrySelector.style.display = "none"
     }
   }
 
   private showSDKSettings(show:boolean){
     if (!show){
-      this.offlineSettingsContainer.style.display = "block"
+      this.offlineSettingsContainer.style.display = "inline-block"
+      this.offlineButtonSDKPathSelector.style.display = "inline-block"
     } else {
       this.offlineSettingsContainer.style.display = "none"
+      this.offlineButtonSDKPathSelector.style.display = "none"
     }
+  }
+
+  public setOfflineSDK(offline:boolean){
+    this.isOfflineSDK = offline;
+    this.updateUI();
   }
 
 }
