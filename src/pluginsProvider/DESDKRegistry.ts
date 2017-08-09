@@ -119,6 +119,9 @@ export class DESDKRegistry {
   public getLocalSDKPlugins(){
     let pluginArray= new Array();
     let sdkLocation = this.getOfflineSDKPath()
+    if (!fs.existsSync(sdkLocation)) {
+      return pluginArray;
+    }
     let pluginDirectories = this.getDirectories(sdkLocation);
     _.forEach(pluginDirectories,(singlePath) => {
       let pluginInfo = this.loadLocalPluginInfo(path.join(sdkLocation, singlePath));
@@ -160,7 +163,7 @@ export class DESDKRegistry {
       license: packageJSON.license,
       author: packageJSON.author,
       platforms: this.readAvailablePlatforms(packageJSON)
-      //homepage: "https://&www.vipera.com",
+      //homepage: "https://www.vipera.com",
       //lastUpdateTime: ""+ new Date(),
       //rating: 10,
       //platforms: [this.getPlatformDesc('ios'), this.getPlatformDesc('android')]
