@@ -44,26 +44,6 @@
     }
   },
   "configSchema": {
-    "toolbarStyle": {
-      "title": "Toolbar Style",
-      "description": "Change toolbar panel position.",
-      "type": "string",
-      "default": "TopPanel",
-      "enum": [
-        {
-          "value": "TopPanel",
-          "description": "Top"
-        },
-        {
-          "value": "BottomPanel",
-          "description": "Bottom"
-        },
-        {
-          "value": "HeaderPanel",
-          "description": "Title"
-        }
-      ]
-    },
     "ViperaNPMRegistry": {
       "title": "Vipera NPM Registry",
       "description": "Vipera NPM Registry",
