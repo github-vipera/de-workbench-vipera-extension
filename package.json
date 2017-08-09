@@ -41,6 +41,11 @@
       "versions": {
         "*": "consumeCordovaPluginsProvider"
       }
+    },
+    "de-wb-projectManager": {
+      "versions": {
+        "*": "consumeProjectManager"
+      }
     }
   },
   "configSchema": {
