@@ -11,11 +11,11 @@ declare function require(moduleName: string): any;
 
 import { LoggerService } from './Logger'
 import { DEPluginsProviderFactory } from './pluginsProvider/DEPluginsProviderFactory'
-
+import { WorkbenchServices } from './WorkbenchServices'
 
 export default {
 
-  dewebCordovaPluginsProviderManager: null,
+  //dewebCordovaPluginsProviderManager: null,
 
 
   config:{
@@ -56,22 +56,21 @@ export default {
 
   consumeCordovaPluginsProvider: function (dewebCordovaPluginsProviderManager) {
     console.log("Consuming DE WB plugin manager...");
-    this.dewebCordovaPluginsProviderManager = dewebCordovaPluginsProviderManager;
-    this.dewebCordovaPluginsProviderManager.registerProviderFactory(DEPluginsProviderFactory.getInstance());
+    WorkbenchServices.CordovaPluginsProviderManager = dewebCordovaPluginsProviderManager;
+    WorkbenchServices.CordovaPluginsProviderManager.registerProviderFactory(DEPluginsProviderFactory.getInstance());
     console.log("Consuming DE WB plugin manager...END");
   },
 
   consumeLogger:function(logger){
     console.log("Consuming DE WB Logger!!");
+    WorkbenchServices.Logger = logger;
     LoggerService.setLogger(logger);
     console.log("Consuming DE WB Logger END!!");
   },
 
   consumeProjectManager:function(projectManager){
     console.log("Consuming DE WB Project Manager!!");
-    //alert(projectManager)
-    //alert(projectManager.cordova)
-    //LoggerService.setLogger(logger);
+    WorkbenchServices.ProjectManager = projectManager;
     console.log("Consuming DE WB Project Manager END!!");
   }
 }

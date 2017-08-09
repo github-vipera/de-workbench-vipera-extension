@@ -10,6 +10,7 @@ import { LoggerService } from '../Logger'
 import { DEWBResourceManager } from '../utils/DEWBResourceManager'
 import { DEPlusinsListUIHandler } from './DEPluginsListUIHandler'
 import { DESDKRegistry } from './DESDKRegistry'
+import { WorkbenchServices } from '../WorkbenchServices'
 
 export interface CordovaPluginsProviderService {
   getCordovaPlugins():Array<any>;
@@ -41,6 +42,9 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
       //read from URI
       ret = DEWBResourceManager.getJSONResource('dynamic_engine_plugins.json')["plugins"];
     }
+
+    //let platforms = WorkbenchServices.ProjectManager.cordova.getInstalledPlatformsSync(WorkbenchServices.ProjectManager.getCurrentProjectPath())
+    //alert(JSON.stringify(platforms))
 
     return ret;
   }
