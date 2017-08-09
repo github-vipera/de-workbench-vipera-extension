@@ -157,6 +157,7 @@ export class DESDKRegistry {
       "version": packageJSON.version,
       "description": packageJSON.description,
       "lastUpdate": "",
+      "localPath": dir,
       installed: false,
       repository: "local",
       repositoryType: "private",
