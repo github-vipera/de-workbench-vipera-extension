@@ -11,5 +11,6 @@ export class WorkbenchServices {
   public static ProjectManager:any=undefined;
   public static Logger:any=undefined;
   public static CordovaPluginsProviderManager:any=undefined;
+  public static Events:any=undefined;
 
 }

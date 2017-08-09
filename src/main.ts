@@ -72,5 +72,11 @@ export default {
     console.log("Consuming DE WB Project Manager!!");
     WorkbenchServices.ProjectManager = projectManager;
     console.log("Consuming DE WB Project Manager END!!");
+  },
+
+  consumeEvents:function(eventBus){
+    console.log("Consuming DE WB Event Bus!!");
+    WorkbenchServices.Events = eventBus;
+    console.log("Consuming DE WB Event Bus END!!");
   }
 }

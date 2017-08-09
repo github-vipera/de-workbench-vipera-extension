@@ -46,6 +46,11 @@
       "versions": {
         "*": "consumeProjectManager"
       }
+    },
+    "de-wb-events": {
+      "versions": {
+        "*": "consumeEvents"
+      }
     }
   },
   "configSchema": {

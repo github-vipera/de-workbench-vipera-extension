@@ -28,6 +28,14 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
     LoggerService.debug("Creating CordovaPluginsProvidersManager...")
     this.currentProjectRoot = WorkbenchServices.ProjectManager.getCurrentProjectPath();
 
+    // subcribe for plugins events
+    WorkbenchServices.Events.on('dewb.project.cordova.pluginAdded',()=>{
+      this.notifyListChanged();
+    })
+    WorkbenchServices.Events.on('dewb.project.cordova.pluginRemoved',()=>{
+      this.notifyListChanged();
+    })
+
   }
 
   public getProviderName():string {
@@ -95,12 +103,16 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
       this.uiHandler = new DEPlusinsListUIHandler().addActionListener((action)=>{
           // reload plugins and notify list changes
           //TODO!! reload plugins
-          if (this.eventHandler){
-            this.eventHandler({ type: 'listChanged' })
-          }
+          this.notifyListChanged();
       });
     }
     return this.uiHandler.element()
+  }
+
+  private notifyListChanged(){
+    if (this.eventHandler){
+      this.eventHandler({ type: 'listChanged' })
+    }
   }
 
   addEventHandler(handler:Function){
