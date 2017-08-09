@@ -13,7 +13,7 @@ import { DESDKRegistry } from './DESDKRegistry'
 import { WorkbenchServices } from '../WorkbenchServices'
 
 export interface CordovaPluginsProviderService {
-  getCordovaPlugins():Array<any>;
+  getCordovaPlugins():Promise<Array<any>>;
   getProviderName():string;
   getExtendedUI():HTMLElement;
 }
@@ -22,9 +22,11 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
 
   private uiHandler:DEPlusinsListUIHandler;
   private eventHandler:Function;
+  private currentProjectRoot:string;
 
   public constructor() {
     LoggerService.debug("Creating CordovaPluginsProvidersManager...")
+    this.currentProjectRoot = WorkbenchServices.ProjectManager.getCurrentProjectPath();
 
   }
 
@@ -32,7 +34,7 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
     return "Dynamic Engine Plugins"
   }
 
-  getCordovaPlugins():Array<any>{
+  async getCordovaPlugins(){
     var ret = [];
 
     if (DESDKRegistry.getInstance().isOfflineSDK()){
@@ -43,10 +45,10 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
       ret = DEWBResourceManager.getJSONResource('dynamic_engine_plugins.json')["plugins"];
     }
 
-    //let platforms = WorkbenchServices.ProjectManager.cordova.getInstalledPlatformsSync(WorkbenchServices.ProjectManager.getCurrentProjectPath())
-    //alert(JSON.stringify(platforms))
+    let installedPlugins = await WorkbenchServices.ProjectManager.cordova.getInstalledPlugins(this.currentProjectRoot);
+    let processedResults:Array<any> = WorkbenchServices.ProjectManager.cordova.markInstalledPlugins(ret, installedPlugins);
 
-    return ret;
+    return processedResults;
   }
 
   private createCordovaPluginDesc(){
