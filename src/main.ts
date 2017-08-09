@@ -69,8 +69,8 @@ export default {
 
   consumeProjectManager:function(projectManager){
     console.log("Consuming DE WB Project Manager!!");
-    alert(projectManager)
-    alert(projectManager.cordova)
+    //alert(projectManager)
+    //alert(projectManager.cordova)
     //LoggerService.setLogger(logger);
     console.log("Consuming DE WB Project Manager END!!");
   }
