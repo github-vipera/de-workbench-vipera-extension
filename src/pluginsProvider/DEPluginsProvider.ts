@@ -38,10 +38,16 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
 
   }
 
+  /**
+   * called from the Workbench
+   **/
   public getProviderName():string {
     return "Dynamic Engine Plugins"
   }
 
+  /**
+   * called from the Workbench
+   **/
   async getCordovaPlugins(){
     var ret = [];
 
@@ -59,6 +65,7 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
     return processedResults;
   }
 
+  /**
   private createCordovaPluginDesc(){
     return {
       name: "pippo",
@@ -76,6 +83,7 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
       platforms: [this.getPlatformDesc('ios'), this.getPlatformDesc('android')]
     }
   }
+  **/
 
   private getPlatformDesc(platform:string){
     if (platform==='ios'){
@@ -98,6 +106,9 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
     }
   }
 
+  /**
+   * called from the Workbench
+   **/
   getExtendedUI():HTMLElement {
     if (!this.uiHandler){
       this.uiHandler = new DEPlusinsListUIHandler().addActionListener((action)=>{
@@ -109,12 +120,18 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
     return this.uiHandler.element()
   }
 
+  /**
+   * Notify the Workbench to reload the list
+   **/
   private notifyListChanged(){
     if (this.eventHandler){
       this.eventHandler({ type: 'listChanged' })
     }
   }
 
+  /**
+   * called from the Workbench
+   **/
   addEventHandler(handler:Function){
     this.eventHandler = handler;
   }
