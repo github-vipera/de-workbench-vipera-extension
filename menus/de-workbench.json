@@ -5,10 +5,7 @@
       "label": "DE Workbench",
       "submenu": [{
         "label": "Vipera",
-        "submenu": [{
-          "label": "Foo Action",
-          "command": "dewb-menu-view-:foo-action"
-        }
+        "submenu": [
         ]
       }]
     }]

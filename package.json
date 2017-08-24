@@ -51,6 +51,11 @@
       "versions": {
         "*": "consumeEvents"
       }
+    },
+    "de-wb-servers": {
+      "versions": {
+        "0.0.1": "consumeServerManager"
+      }
     }
   },
   "configSchema": {
@@ -85,9 +90,11 @@
   "dependencies": {
     "atom-package-deps": "^4.6.0",
     "atom-select-list": "^0.2.0",
+    "de-mock-server-lib": "git+https://github.com/github-vipera/de-mock-server-lib/",
     "fs": "0.0.1-security",
-    "registry-url": "^3.1.0",
-    "lodash": "^4.17.3"
+    "lodash": "^4.17.3",
+    "loophole": "^1.1.0",
+    "registry-url": "^3.1.0"
   },
   "devDependencies": {
     "@types/atom": "^0.0.38",

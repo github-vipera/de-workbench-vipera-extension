@@ -12,6 +12,10 @@ declare function require(moduleName: string): any;
 import { LoggerService } from './Logger'
 import { DEPluginsProviderFactory } from './pluginsProvider/DEPluginsProviderFactory'
 import { WorkbenchServices } from './WorkbenchServices'
+import { FakeMOTIFServerProvider } from './FooServer/FooServerProvider'
+import { MotifMockServerProvider } from './MOTIFMockServer/MOTIFMockServer'
+
+
 
 export default {
 
@@ -78,5 +82,14 @@ export default {
     console.log("Consuming DE WB Event Bus!!");
     WorkbenchServices.Events = eventBus;
     console.log("Consuming DE WB Event Bus END!!");
+  },
+
+  consumeServerManager:function(serverManager){
+    console.log("Consuming DE WB Server Manager!!");
+    WorkbenchServices.ServerManager = serverManager;
+    WorkbenchServices.ServerManager.registerProvider(new FakeMOTIFServerProvider)
+    WorkbenchServices.ServerManager.registerProvider(new MotifMockServerProvider)
+    console.log("Consuming DE WB Server Manager END!!");
   }
+
 }
