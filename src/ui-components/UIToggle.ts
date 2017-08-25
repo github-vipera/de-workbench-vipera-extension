@@ -69,12 +69,15 @@ export class UIToggle {
     }
 
     public get value():boolean{
-      //return this.txtInput["value"];
-      return false;
+      return this.toggleInput["checked"];
     }
 
     public set value(value:boolean){
-        // this.txtInput["value"] = value;
+      if (value){
+        this.toggleInput.setAttribute('checked','')
+      } else {
+        this.toggleInput.removeAttribute('checked')
+      }
     }
 
 

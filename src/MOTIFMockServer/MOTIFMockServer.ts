@@ -184,7 +184,7 @@ class MotifFMockConfigurator implements ServerInstanceConfigurator {
   }
 
   getConfiguration():MotifServerConfig{
-    return this.currentConfig;
+    return this.configUI.getConfiguration();
   }
 
   addEventListener(event:string, listener) {
