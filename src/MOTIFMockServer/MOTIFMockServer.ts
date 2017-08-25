@@ -22,6 +22,9 @@ import { LoggerService } from '../Logger'
 import { DEWBResourceManager } from '../utils/DEWBResourceManager'
 import { WorkbenchServices } from '../WorkbenchServices'
 import { EventEmitter }  from 'events'
+import { MOTIFServerConfigUI } from './MOTIFServerConfigUI'
+import { MotifServerConfig } from './MOTIFMockServerCommons'
+
 const {allowUnsafeEval, allowUnsafeNewFunction} = require('loophole');
 const {ServerManagerFactory,ServerManager}  = allowUnsafeNewFunction(()=> allowUnsafeEval(() => require('de-mock-server-lib')));
 
@@ -169,17 +172,14 @@ class MotifFMockConfigurator implements ServerInstanceConfigurator {
 
   events:EventEmitter;
   currentConfig:MotifServerConfig;
-  mainElement:HTMLElement;
+  configUI:MOTIFServerConfigUI;
 
   constructor(){
     this.events = new EventEmitter();
   }
 
   protected initUI(){
-    this.mainElement  = createElement('div',{
-      elements:[ createText("TODO!! Motif Mock Server") ]
-    })
-
+    this.configUI = new MOTIFServerConfigUI();
     this.updateUI();
   }
 
@@ -197,20 +197,22 @@ class MotifFMockConfigurator implements ServerInstanceConfigurator {
 
   applyConfiguration(configuration:any){
     this.currentConfig = configuration;
-    if (this.mainElement){
+    if (this.configUI){
       this.updateUI();
     }
   }
 
   getConfigurationPane():HTMLElement {
-    if (!this.mainElement){
+    if (!this.configUI){
       this.initUI();
     }
-    return this.mainElement;
+    return this.configUI.mainElement;
   }
 
   protected updateUI(){
-    //TODO!!
+    if (this.configUI){
+      this.configUI.updateUI(this.currentConfig);
+    }
   }
 
   protected fireConfigChanged(){
@@ -221,13 +223,4 @@ class MotifFMockConfigurator implements ServerInstanceConfigurator {
     this.updateUI()
   }
 
-}
-
-class MotifServerConfig {
-  port:number=3000
-  isMockEnabled:boolean=true
-  mockModulePath:string=""
-  libraryLoaderPath:string=""
-  localDBPath:string=""
-  liveReload:boolean=true
 }
