@@ -115,6 +115,7 @@ class MotifMockServer implements ServerInstance {
       this.resolvePaths(this.config);
       this.serverManager = ServerManagerFactory.createServerManager();
       this.serverManager.start(this.config);
+      this.status = ServerStatus.Running
       this.fireStatusChange()
     } else {
       //server already started...
@@ -127,6 +128,7 @@ class MotifMockServer implements ServerInstance {
       this.status = ServerStatus.Stopping
       this.serverManager.stop();
       this.serverManager = null;
+      this.status = ServerStatus.Stopped
       this.fireStatusChange()
     } else {
       //server not runnig or stopping
