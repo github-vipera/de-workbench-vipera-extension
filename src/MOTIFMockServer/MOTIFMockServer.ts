@@ -71,7 +71,7 @@ export class MotifMockServerProvider implements ServerProvider {
   }
 
   createInstance(configuration:any):ServerInstance {
-    return new MotifMockServer();
+    return new MotifMockServer(configuration);
   }
 
   getProviderName():string {
@@ -92,8 +92,9 @@ class MotifMockServer implements ServerInstance {
   protected serverManager:any;
   protected configurator:MotifFMockConfigurator;
 
-  constructor(){
+  constructor(config:any){
     this.events = new EventEmitter();
+    this.config = config;
     this.initConfigurator();
   }
 
