@@ -21,7 +21,7 @@
     "android"
   ],
   "license": "MIT",
-  "repository": "https://github.com/github-vipera/de-workbench",
+  "repository": "https://github.com/github-vipera/de-workbench-vipera-extension",
   "main": "./lib/main",
   "showWelcome": true,
   "scripts": {
