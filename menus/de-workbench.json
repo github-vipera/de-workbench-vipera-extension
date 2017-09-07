@@ -1,0 +1,14 @@
+{
+  "menu": [{
+    "label": "Packages",
+    "submenu": [{
+      "label": "DE Workbench",
+      "submenu": [{
+        "label": "Vipera",
+        "submenu": [
+        ]
+      }]
+    }]
+  }]
+
+}

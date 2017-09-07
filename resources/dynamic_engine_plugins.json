@@ -1,0 +1,130 @@
+{
+  "plugins": [
+    {
+      "name": "de-motifconnector-plugin",
+      "id": "de-motifconnector-plugin",
+      "url": "https://gitlab.vipera.com/dynamic-engine/de-motifconnector-plugin",
+      "repoUrl": "https://gitlab.vipera.com/dynamic-engine/de-motifconnector-plugin.git",
+      "version": "1.0.0",
+      "description": "MOTIF Connector plugin",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "installed": false,
+      "author": "Vipera Plc",
+      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-motifconnector-plugin",
+      "license": "Vipera Commercial",
+      "repository": "remote",
+      "repositoryType": "private",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "rating": "Not available",
+      "platforms": [
+        { "name": "ios", "displayName" : "iOS"},
+        { "name": "android", "displayName" : "Android"}
+      ]
+    },
+    {
+      "name": "de-splashscreen-plugin",
+      "id": "de-splashscreen-plugin",
+      "url": "https://gitlab.vipera.com/dynamic-engine/de-splashscreen-plugin",
+      "repoUrl": "https://gitlab.vipera.com/dynamic-engine/de-splashscreen-plugin.git",
+      "version": "1.0.0",
+      "description": "Splash Screen Plugin",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "installed": false,
+      "author": "Vipera Plc",
+      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-splashscreen-plugin",
+      "license": "Vipera Commercial",
+      "repository": "remote",
+      "repositoryType": "private",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "rating": "Not available",
+      "platforms": [
+        { "name": "ios", "displayName" : "iOS"},
+        { "name": "android", "displayName" : "Android"}
+      ]
+    },
+    {
+      "name": "de-splashscreen-plugin",
+      "id": "de-splashscreen-plugin",
+      "url": "https://gitlab.vipera.com/dynamic-engine/de-splashscreen-plugin",
+      "repoUrl": "https://gitlab.vipera.com/dynamic-engine/de-splashscreen-plugin.git",
+      "version": "1.0.0",
+      "description": "Splash Screen Plugin",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "installed": false,
+      "author": "Vipera Plc",
+      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-splashscreen-plugin",
+      "license": "Vipera Commercial",
+      "repository": "remote",
+      "repositoryType": "private",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "rating": "Not available",
+      "platforms": [
+        { "name": "ios", "displayName" : "iOS"},
+        { "name": "android", "displayName" : "Android"}
+      ]
+    },
+    {
+      "name": "de-tools-plugin",
+      "id": "de-tools-plugin",
+      "url": "https://gitlab.vipera.com/dynamic-engine/de-tools-plugin",
+      "repoUrl": "https://gitlab.vipera.com/dynamic-engine/de-tools-plugin.git",
+      "version": "1.0.0",
+      "description": "Plugin for connection with official Dynamic Engine Debugger tools",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "installed": false,
+      "author": "Vipera Plc",
+      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-tools-plugin",
+      "license": "Vipera Commercial",
+      "repository": "remote",
+      "repositoryType": "private",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "rating": "Not available",
+      "platforms": [
+        { "name": "ios", "displayName" : "iOS"},
+        { "name": "android", "displayName" : "Android"}
+      ]
+    },
+    {
+      "name": "de-core-plugin",
+      "id": "de-core-plugin",
+      "url": "https://gitlab.vipera.com/dynamic-engine/de-core-plugin",
+      "repoUrl": "https://gitlab.vipera.com/dynamic-engine/de-core-plugin.git",
+      "version": "1.0.0",
+      "description": "Core plugin",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "installed": false,
+      "author": "Vipera Plc",
+      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-core-plugin",
+      "license": "Vipera Commercial",
+      "repository": "remote",
+      "repositoryType": "private",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "rating": "Not available",
+      "platforms": [
+        { "name": "ios", "displayName" : "iOS"},
+        { "name": "android", "displayName" : "Android"}
+      ]
+    },
+    {
+      "name": "de-assetmanager-plugin",
+      "id": "de-assetmanager-plugin",
+      "url": "https://gitlab.vipera.com/dynamic-engine/de-assetmanager-plugin",
+      "repoUrl": "https://gitlab.vipera.com/dynamic-engine/de-assetmanager-plugin.git",
+      "version": "1.0.0",
+      "description": "Dynamic Engine Asset Update plugin",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "installed": false,
+      "author": "Vipera Plc",
+      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-assetmanager-plugin",
+      "license": "Vipera Commercial",
+      "repository": "remote",
+      "repositoryType": "private",
+      "lastUpdateTime": "2017-06-21T14:27:10.762Z",
+      "rating": "Not available",
+      "platforms": [
+        { "name": "ios", "displayName" : "iOS"},
+        { "name": "android", "displayName" : "Android"}
+      ]
+    }
+  ]
+}
