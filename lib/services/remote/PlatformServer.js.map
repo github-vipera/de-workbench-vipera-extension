@@ -1,0 +1,1 @@
+{"version":3,"file":"PlatformServer.js","sourceRoot":"","sources":["../../../src/services/remote/PlatformServer.ts"],"names":[],"mappings":"AAAA,WAAW,CAAA;AAEX,MAAM;CAEL","sourcesContent":["'use babel'\nimport * as express from \"express\";\nexport class PlatformServer {\n\n}\n"]}
