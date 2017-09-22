@@ -31,14 +31,13 @@
       "lastUpdateTime": "2017-06-21T14:27:10.762Z",
       "installed": false,
       "author": "Vipera Plc",
-      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-splashscreen-plugin",
+      "homepage": "https://gitlab.vipera.com/dynamic-engine/de-mwallet-plugin",
       "license": "Vipera Commercial",
       "repository": "remote",
       "repositoryType": "private",
       "lastUpdateTime": "2017-06-21T14:27:10.762Z",
       "rating": "Not available",
       "platforms": [
-        { "name": "ios", "displayName" : "iOS"},
         { "name": "android", "displayName" : "Android"}
       ]
     },
