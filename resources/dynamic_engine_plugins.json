@@ -67,7 +67,7 @@
       "id": "de-tools-plugin",
       "url": "https://gitlab.vipera.com/dynamic-engine/de-tools-plugin",
       "repoUrl": "https://gitlab.vipera.com/dynamic-engine/de-tools-plugin.git",
-      "version": "0.0.4",
+      "version": "0.0.5",
       "description": "Plugin for connection with official Dynamic Engine Debugger tools",
       "lastUpdateTime": "2017-06-21T14:27:10.762Z",
       "installed": false,
