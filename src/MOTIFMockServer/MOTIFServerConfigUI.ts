@@ -58,7 +58,7 @@ export class MOTIFServerConfigUI {
 
     this.txtMotifServerUrl = new UIInput({
       caption: "Motif Server Url",
-      placeholder:"http://localhost:8080/json",
+      placeholder:"Es: 'http://localhost:8080/json'",
       visible:true
     });
 
@@ -107,13 +107,13 @@ export class MOTIFServerConfigUI {
   }
 
   public updateUI(config:MotifServerConfig){
-    this.portNumber = config.port
+    this.portNumber = config.port || -1;
     this.isMockEnabled = config.isMockEnabled
-    this.mockModulePath = config.mockModulePath
-    this.libraryLoaderPath = config.libraryLoaderPath
-    this.localDBPath = config.localDBPath
+    this.mockModulePath = config.mockModulePath || ""
+    this.libraryLoaderPath = config.libraryLoaderPath || ""
+    this.localDBPath = config.localDBPath || ""
     this.liveReload = config.liveReload
-    this.serverUrl = config.serverUrl
+    this.serverUrl = config.serverUrl || "";
   }
 
   addEventListener(event:string, listener) {
@@ -170,7 +170,7 @@ export class MOTIFServerConfigUI {
   }
 
   public set portNumber(value:number) {
-    this.txtServerPort.value = ""+value;
+    this.txtServerPort.value = ""+(value > 0 ? value : "");
   }
 
   public set mockModulePath(value:string) {
