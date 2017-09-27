@@ -5,4 +5,5 @@ export declare class MotifServerConfig {
     libraryLoaderPath: string;
     localDBPath: string;
     liveReload: boolean;
+    serverUrl?: string;
 }

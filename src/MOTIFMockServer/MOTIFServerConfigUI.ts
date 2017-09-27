@@ -31,6 +31,7 @@ export class MOTIFServerConfigUI {
 
   protected txtServerPort:UIInput;
   protected txtMockModulePath:UIInput;
+  protected txtMotifServerUrl:UIInput;
   protected txtLibraryLoaderPath:UIInput;
   protected txtLocalDbPath:UIInput;
   protected mockEnabled:UIToggle;
@@ -51,24 +52,37 @@ export class MOTIFServerConfigUI {
     this.txtMockModulePath = new UIInput({
       caption: "Mock Module File",
       placeholder : "Mock Module File",
-      browseFor: "file"
+      browseFor: "file",
+      visible:false
     })
+
+    this.txtMotifServerUrl = new UIInput({
+      caption: "Motif Server Url",
+      placeholder:"http://localhost:8080/json",
+      visible:true
+    });
 
     this.txtLibraryLoaderPath = new UIInput({
       caption: "Library Loader File",
       placeholder : "Library Loader File",
-      browseFor: "file"
+      browseFor: "file",
+      visible:false
     })
 
     this.txtLocalDbPath = new UIInput({
       caption: "Local Database Path",
       placeholder : "Local Database  Path",
-      browseFor:"folder"
+      browseFor:"folder",
+      visible:false
     })
 
     this.mockEnabled = new UIToggle({
       caption: 'Use mock'
     })
+
+    this.mockEnabled.onDidValueChange(() => {
+      this.updateMockUI();
+    });
 
     this.liveReloadEnabled = new UIToggle({
       caption: 'Live reload'
@@ -77,6 +91,7 @@ export class MOTIFServerConfigUI {
     this.mainElement = createElement('div',{
       elements:[ this.txtServerPort.element,
         this.txtMockModulePath.element,
+        this.txtMotifServerUrl.element,
         this.mockEnabled.element,
         this.liveReloadEnabled.element,
         this.txtLibraryLoaderPath.element,
@@ -98,6 +113,7 @@ export class MOTIFServerConfigUI {
     this.libraryLoaderPath = config.libraryLoaderPath
     this.localDBPath = config.localDBPath
     this.liveReload = config.liveReload
+    this.serverUrl = config.serverUrl
   }
 
   addEventListener(event:string, listener) {
@@ -115,7 +131,8 @@ export class MOTIFServerConfigUI {
       mockModulePath: this.mockModulePath,
       libraryLoaderPath: this.libraryLoaderPath,
       localDBPath: this.localDBPath,
-      liveReload: this.liveReload
+      liveReload: this.liveReload,
+      serverUrl: this.serverUrl
     }
     return ret;
   }
@@ -148,6 +165,9 @@ export class MOTIFServerConfigUI {
     return this.liveReloadEnabled.value;
   }
 
+  public get serverUrl():string {
+    return this.txtMotifServerUrl.value;
+  }
 
   public set portNumber(value:number) {
     this.txtServerPort.value = ""+value;
@@ -167,10 +187,30 @@ export class MOTIFServerConfigUI {
 
   public set isMockEnabled(value:boolean) {
     this.mockEnabled.value = value;
+    this.updateMockUI();
   }
 
   public set liveReload(value:boolean) {
     this.liveReloadEnabled.value = value;
+  }
+
+  public set serverUrl(value:string){
+    this.txtMotifServerUrl.value = value;
+  }
+
+
+  private updateMockUI(){
+    if(!this.isMockEnabled){
+      this.txtMockModulePath.setVisible(false);
+      this.txtLocalDbPath.setVisible(false);
+      this.txtLibraryLoaderPath.setVisible(false);
+      this.txtMotifServerUrl.setVisible(true);
+    }else{
+      this.txtMockModulePath.setVisible(true);
+      this.txtLocalDbPath.setVisible(true);
+      this.txtLibraryLoaderPath.setVisible(true);
+      this.txtMotifServerUrl.setVisible(false);
+    }
   }
 
 }

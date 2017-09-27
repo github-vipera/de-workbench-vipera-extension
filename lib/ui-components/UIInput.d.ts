@@ -3,6 +3,7 @@ export interface UIInputOptions {
     placeholder?: string;
     value?: string;
     browseFor?: string;
+    visible?: boolean;
 }
 export declare class UIInput {
     mainElement: HTMLElement;
@@ -20,4 +21,5 @@ export declare class UIInput {
     protected chooseFile(): void;
     readonly element: HTMLElement;
     value: string;
+    setVisible(value: boolean, defaultDisplay?: string): void;
 }

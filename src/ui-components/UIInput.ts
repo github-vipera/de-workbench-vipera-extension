@@ -22,13 +22,15 @@ import { LoggerService } from '../Logger'
 import { EventEmitter }  from 'events'
 const remote = require('remote');
 const dialog = remote.require('electron').dialog;
-
+const DEFAULT_DISPLAY_OPTIONS:string = "block";
+const HIDE_DISPLAY_OPTIONS:string = "none";
 
 export interface UIInputOptions {
   caption?:string;
   placeholder?:string;
   value?:string;
   browseFor?:string;
+  visible?:boolean;
 }
 
 export class UIInput {
@@ -48,6 +50,10 @@ export class UIInput {
     this.mainElement = createElement('div',{
       className: 'de-wb-vipera-ext-ui-input-container'
     })
+
+    if(this.options.visible === false){
+        this.mainElement.style.display = 'none';
+    }
 
     if (this.options && this.options.caption){
       this.lblCaption = createElement('label',{
@@ -144,5 +150,12 @@ export class UIInput {
     this.txtInput["value"] = value;
   }
 
+  public setVisible(value:boolean,defaultDisplay?:string){
+    if(value){
+      this.mainElement.style.display = defaultDisplay || DEFAULT_DISPLAY_OPTIONS;
+    }else{
+      this.mainElement.style.display = HIDE_DISPLAY_OPTIONS;
+    }
+  }
 
 }
