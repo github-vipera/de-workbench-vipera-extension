@@ -33,10 +33,11 @@ export class UIToggle {
   options:UIToggleOptions;
   lblCaption:HTMLElement;
   toggleInput:HTMLElement;
-
+  events:EventEmitter;
 
   constructor(options:UIToggleOptions){
     this.options = options;
+    this.events = new EventEmitter();
     this.initUI();
   }
 
@@ -52,6 +53,10 @@ export class UIToggle {
     if (this.options.value){
       this.toggleInput.setAttribute('checked','')
     }
+
+    this.toggleInput.addEventListener('change',() => {
+      this.fireValueChange(this.value);
+    });
 
     //<label class='input-label'><input class='input-toggle' type='checkbox' checked> Toggle</label>
     this.lblCaption = createElement('label',{
@@ -78,6 +83,22 @@ export class UIToggle {
       } else {
         this.toggleInput.removeAttribute('checked')
       }
+    }
+
+    private fireValueChange(value:boolean){
+      this.events.emit('didValueChanged',value);
+    }
+
+    public onDidValueChange(listener) {
+      this.addEventListener("didValueChanged", listener)
+    }
+
+    public addEventListener(event:string, listener) {
+      this.events.addListener(event, listener)
+    }
+
+    public removeEventListener(event:string, listener){
+      this.events.removeListener(event, listener)
     }
 
 

@@ -9,9 +9,10 @@
 
 export class MotifServerConfig {
   public port:number=3000
-  public isMockEnabled:boolean=true
+  public isMockEnabled:boolean=false;
   public mockModulePath:string=""
   public libraryLoaderPath:string=""
   public localDBPath:string=""
   public liveReload:boolean=true
+  public serverUrl?:string = undefined;
 }

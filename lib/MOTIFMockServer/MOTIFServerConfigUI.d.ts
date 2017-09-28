@@ -8,6 +8,7 @@ export declare class MOTIFServerConfigUI {
     mainElement: HTMLElement;
     protected txtServerPort: UIInput;
     protected txtMockModulePath: UIInput;
+    protected txtMotifServerUrl: UIInput;
     protected txtLibraryLoaderPath: UIInput;
     protected txtLocalDbPath: UIInput;
     protected mockEnabled: UIToggle;
@@ -25,4 +26,6 @@ export declare class MOTIFServerConfigUI {
     localDBPath: string;
     isMockEnabled: boolean;
     liveReload: boolean;
+    serverUrl: string;
+    private updateMockUI();
 }
