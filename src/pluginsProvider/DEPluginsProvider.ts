@@ -36,7 +36,7 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
       this.notifyListChanged();
     })
 
-    atom.config.onDidChange('de-workbench-vipera-extension.OfflineSDKPath', null, (val)=>{
+    atom.config.onDidChange('de-workbench-vipera-extension.OfflineSDKPath', (val)=>{
       this.notifyListChanged()
     });
 
