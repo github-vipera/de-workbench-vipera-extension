@@ -56,6 +56,11 @@
       "versions": {
         "0.0.1": "consumeServerManager"
       }
+    },
+    "de-wb-executor-service": {
+      "versions": {
+        "0.0.1": "consumeExecutorService"
+      }
     }
   },
   "configSchema": {
@@ -82,6 +87,12 @@
       "description": "Offline Dynamic Engine SDK Path",
       "type": "string",
       "default": ""
+    },
+    "DECCLICheck": {
+      "title": "Check DE CLI",
+      "description": "Check for DE CLI installation the next start time",
+      "type": "boolean",
+      "default": true
     }
   },
   "package-deps": [
@@ -97,9 +108,9 @@
     "registry-url": "^3.1.0"
   },
   "devDependencies": {
-    "@types/atom": "^0.0.38",
+    "@types/atom": "^1.21.3",
     "@types/lodash": "^4.14.62",
-    "@types/node": "^7.0.8",
+    "@types/node": "^8.0.19",
     "typescript": "^2.3.0"
   },
   "de-wb-vipera-extension": [

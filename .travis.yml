@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "6.3"
+sudo: false
+before_install:
+- npm install -g typescript
+script:
+- tsc -p tsconfig.json
+notifications:
+  email:
+    recipients:
+      - marco.bonati@vipera.com
+    on_success: always # default: change
+    on_failure: always # default: always

@@ -58,7 +58,7 @@ export class MOTIFServerConfigUI {
 
     this.txtMotifServerUrl = new UIInput({
       caption: "Motif Server Url",
-      placeholder:"Es: 'http://localhost:8080/json'",
+      placeholder:"Ex: 'http://localhost:8080/json'",
       visible:true
     });
 

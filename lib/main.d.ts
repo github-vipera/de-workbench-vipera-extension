@@ -1,4 +1,5 @@
 declare const _default: {
+    subcriptions: any;
     config: {
         ViperaNPMRegistry: {
             title: string;
@@ -16,5 +17,9 @@ declare const _default: {
     consumeProjectManager: (projectManager: any) => void;
     consumeEvents: (eventBus: any) => void;
     consumeServerManager: (serverManager: any) => void;
+    consumeExecutorService: (executorService: any) => void;
+    installDECli(): Promise<void>;
+    checkForDECli(): Promise<void>;
+    needDECLICheck(): boolean;
 };
 export default _default;

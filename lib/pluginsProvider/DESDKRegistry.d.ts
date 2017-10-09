@@ -9,7 +9,7 @@ export declare class DESDKRegistry {
     isOfflineSDK(): boolean;
     setOfflineSDK(offline: boolean): void;
     getOfflineSDKPath(): string;
-    setOfflineSDKPath(path: string): any;
+    setOfflineSDKPath(path: string): void;
     getCurrentNPMRegistry(): string;
     restoreDefaultNPMRegistry(): string;
     installViperaNPMRegistry(): string;

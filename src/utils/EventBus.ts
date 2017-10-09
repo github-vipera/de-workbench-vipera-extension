@@ -30,7 +30,7 @@ export class EventBus {
         return EventBus.instance;
     }
 
-    public subscribe(topic:string, callback:Function){
+    public subscribe(topic:string, callback){
       this.eventEmitter.on(topic,callback);
     }
 
@@ -39,7 +39,7 @@ export class EventBus {
       this.eventEmitter.emit(topic,args);
     }
 
-    public unsubscribe(topic:string, callback:Function){
+    public unsubscribe(topic:string, callback){
       this.eventEmitter.removeListener(topic, callback)
     }
 

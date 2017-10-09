@@ -4,4 +4,5 @@ export declare class WorkbenchServices {
     static CordovaPluginsProviderManager: any;
     static Events: any;
     static ServerManager: any;
+    static ExecutorService: any;
 }
