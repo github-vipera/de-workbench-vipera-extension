@@ -19,7 +19,6 @@ import { UINotifications } from './ui-components/UINotifications'
 
 export default {
 
-  //dewebCordovaPluginsProviderManager: null,
   subcriptions: null,
 
   config:{
