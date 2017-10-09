@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "allowJs" :false,
     "declaration": true,
     "noImplicitAny": false,
-    "removeComments": false,
+    "removeComments": true,
     "outDir": "lib",
     "typeRoots": [
       "node_modules/@types"

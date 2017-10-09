@@ -108,9 +108,9 @@
     "registry-url": "^3.1.0"
   },
   "devDependencies": {
-    "@types/atom": "^0.0.38",
+    "@types/atom": "^1.21.3",
     "@types/lodash": "^4.14.62",
-    "@types/node": "^7.0.8",
+    "@types/node": "^8.0.19",
     "typescript": "^2.3.0"
   },
   "de-wb-vipera-extension": [
