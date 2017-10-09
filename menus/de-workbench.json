@@ -6,6 +6,14 @@
       "submenu": [{
         "label": "Vipera",
         "submenu": [
+          {
+            "label": "Install DE CLI",
+            "command": "dewb-ext-menu-view-:install-de-cli"
+          },
+          {
+            "label": "Check for DE CLI",
+            "command": "dewb-ext-menu-view-:check-de-cli"
+          }
         ]
       }]
     }]

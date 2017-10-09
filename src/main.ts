@@ -13,13 +13,14 @@ import { LoggerService } from './Logger'
 import { DEPluginsProviderFactory } from './pluginsProvider/DEPluginsProviderFactory'
 import { WorkbenchServices } from './WorkbenchServices'
 import { MotifMockServerProvider } from './MOTIFMockServer/MOTIFMockServer'
-
+import { DEUtils } from './utils/DEUtils'
+import { UINotifications } from './ui-components/UINotifications'
 
 
 export default {
 
   //dewebCordovaPluginsProviderManager: null,
-
+  subcriptions: null,
 
   config:{
       ViperaNPMRegistry: {
@@ -44,8 +45,12 @@ export default {
 
     // add commands
     let commands = atom.commands.add('atom-workspace', {
-        'dewb-menu-view-:foo-action': () => this.fooAction()
+        'dewb-ext-menu-view-:install-de-cli': ()=> this.installDECli(),
+        'dewb-ext-menu-view-:check-de-cli': ()=> this.checkForDECli()
       });
+    this.subscriptions = new CompositeDisposable();
+    // add commands subs
+    this.subscriptions.add(commands);
 
   },
 
@@ -68,26 +73,79 @@ export default {
     console.log("Consuming DE WB Logger!!");
     WorkbenchServices.Logger = logger;
     LoggerService.setLogger(logger);
-    console.log("Consuming DE WB Logger END!!");
+    console.log("Consuming DE WB Logger END!");
   },
 
   consumeProjectManager:function(projectManager){
     console.log("Consuming DE WB Project Manager!!");
     WorkbenchServices.ProjectManager = projectManager;
-    console.log("Consuming DE WB Project Manager END!!");
+    console.log("Consuming DE WB Project Manager END!");
   },
 
   consumeEvents:function(eventBus){
     console.log("Consuming DE WB Event Bus!!");
     WorkbenchServices.Events = eventBus;
-    console.log("Consuming DE WB Event Bus END!!");
+    console.log("Consuming DE WB Event Bus END!");
   },
 
   consumeServerManager:function(serverManager){
     console.log("Consuming DE WB Server Manager!!");
     WorkbenchServices.ServerManager = serverManager;
     WorkbenchServices.ServerManager.registerProvider(new MotifMockServerProvider)
-    console.log("Consuming DE WB Server Manager END!!");
+    console.log("Consuming DE WB Server Manager END!");
+  },
+
+  consumeExecutorService:function(executorService){
+    console.log("Consuming DE WB Executor Service!!");
+    WorkbenchServices.ExecutorService = executorService;
+    console.log("Consuming DE WB Executor Service END!");
+
+    if (this.needDECLICheck()){
+      this.checkForDECli();
+    }
+
+  },
+
+  async installDECli(){
+    let installRunningNotification = UINotifications.showInfo("Installing DE CLI...", { dismissable: true })
+    let ok = await DEUtils.installDECli();
+    if (ok){
+      installRunningNotification.dismiss()
+      UINotifications.showSuccess("DE CLI installed successfully.")
+    } else {
+      installRunningNotification.dismiss()
+      UINotifications.showError("Error installing the DE CLI. See the log for more details.")
+    }
+  },
+
+  async checkForDECli(){
+    let deCliOK = await DEUtils.checkForDECli();
+    atom.config["set"]('de-workbench-vipera-extension.DECCLICheck', false);
+    if (!deCliOK){
+      let notification = UINotifications.showInfo("DE CLI Not Installed.", {
+        dismissable: true,
+        buttons: [
+          {
+            text: 'Do Install',
+            onDidClick: ()=>{
+              notification.dismiss();
+              this.installDECli();
+            }
+          },
+          {
+            text: 'Cancel',
+            onDidClick: ()=>{
+              notification.dismiss();
+            }
+          }
+        ],
+        detail: "La DE CLI non sembra essere installata. Vuoi procedere ora con l'installazione?"
+      })
+    }
+  },
+
+  needDECLICheck():boolean {
+    return  atom.config.get('de-workbench-vipera-extension.DECCLICheck')
   }
 
 }
