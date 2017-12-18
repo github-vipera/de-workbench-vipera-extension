@@ -154,6 +154,23 @@ class MotifMockServer implements ServerInstance {
 
   protected fireStatusChange(){
     this.events.emit('onDidStatusChange', this)
+    this.fireLogEvent("Server is " + this.statusStr);
+  }
+
+  protected get statusStr():string {
+    if (this.status == ServerStatus.Stopped){
+      return "Stopped";
+    } else if (this.status == ServerStatus.Running){
+      return "Running";
+    } else if (this.status == ServerStatus.Starting){
+      return "Starting";
+    } else if (this.status == ServerStatus.Stopping){
+      return "Stopping";
+    }
+  }
+
+  protected fireLogEvent(message:string){
+    this.events.emit('onDidLogEvent', { "instance": this, "message": message } );
   }
 
   // Utilities
