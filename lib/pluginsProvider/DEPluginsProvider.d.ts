@@ -10,6 +10,7 @@ export declare class DEPluginsProvider implements CordovaPluginsProviderService 
     constructor();
     getProviderName(): string;
     getCordovaPlugins(): Promise<any[]>;
+    remotePlugins(): Promise<Array<any>>;
     private getPlatformDesc(platform);
     getExtendedUI(): HTMLElement;
     private notifyListChanged();

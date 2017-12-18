@@ -12,6 +12,8 @@ import { DEPlusinsListUIHandler } from './DEPluginsListUIHandler'
 import { DESDKRegistry } from './DESDKRegistry'
 import { WorkbenchServices } from '../WorkbenchServices'
 
+var remote = require('remote-json');
+
 export interface CordovaPluginsProviderService {
   getCordovaPlugins():Promise<Array<any>>;
   getProviderName():string;
@@ -60,13 +62,31 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
       ret = DESDKRegistry.getInstance().getLocalSDKPlugins()
     } else {
       //read from URI
-      ret = DEWBResourceManager.getJSONResource('dynamic_engine_plugins.json')["plugins"];
+          //ret = DEWBResourceManager.getJSONResource('dynamic_engine_plugins.json')["plugins"];
+          ret = await this.remotePlugins();
     }
 
     let installedPlugins = await WorkbenchServices.ProjectManager.cordova.getInstalledPlugins(this.currentProjectRoot);
     let processedResults:Array<any> = WorkbenchServices.ProjectManager.cordova.markInstalledPlugins(ret, installedPlugins);
 
     return processedResults;
+  }
+
+  remotePlugins():Promise<Array<any>> {
+    return new Promise((resolve, reject)=>{
+      let remoteRegistry = "https://gitlab.vipera.com/dynamic-engine/de-plugins-registry/raw/master/de-plugins-registry.json";
+      remote.contentTypes["application/json"] = true;
+      remote.contentTypes["text/plain"] = false;
+      remote(remoteRegistry)
+          .get(function (err, res, body) {
+              try {
+                let jsonData = JSON.parse(body);
+                resolve(jsonData["plugins"]);
+              } catch (ex){
+                reject(ex);
+              }
+          });
+    });
   }
 
   /**
