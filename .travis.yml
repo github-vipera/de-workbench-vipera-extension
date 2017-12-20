@@ -3,7 +3,7 @@ node_js:
   - "6.3"
 sudo: false
 before_install:
-- npm install -g typescript
+- npm install -g typescript@2.5.3
 script:
 - tsc -p tsconfig.json
 notifications:
