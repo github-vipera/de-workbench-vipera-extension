@@ -18,12 +18,12 @@
    createTextEditor
  } from '../element/index';
 
-import { LoggerService } from '../Logger'
+import { LoggerService, DefaultTransport } from '../Logger'
 import { DEWBResourceManager } from '../utils/DEWBResourceManager'
 import { WorkbenchServices } from '../WorkbenchServices'
 import { EventEmitter }  from 'events'
 import { MOTIFServerConfigUI } from './MOTIFServerConfigUI'
-import { MotifServerConfig } from './MOTIFMockServerCommons'
+import { MotifServerConfig, LoggerTransport } from './MOTIFMockServerCommons'
 
 const {allowUnsafeEval, allowUnsafeNewFunction} = require('loophole');
 const {ServerManagerFactory,ServerManager}  = allowUnsafeNewFunction(()=> allowUnsafeEval(() => require('de-mock-server-lib')));
@@ -115,6 +115,7 @@ class MotifMockServer implements ServerInstance {
       //const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
       this.resolvePaths(this.config);
       this.serverManager = ServerManagerFactory.createServerManager();
+      this.attachLoggerTransport(this.config);
       this.serverManager.start(this.config);
       this.status = ServerStatus.Running
       this.fireStatusChange()
@@ -134,6 +135,15 @@ class MotifMockServer implements ServerInstance {
     } else {
       //server not runnig or stopping
     }
+  }
+
+  attachLoggerTransport(config){
+    console.log("ATTACH");
+    if(config){
+      let transport:LoggerTransport = new DefaultTransport(); 
+      config.loggerTransport=transport;
+    }
+   
   }
 
   configure(){

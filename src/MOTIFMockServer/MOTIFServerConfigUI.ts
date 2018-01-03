@@ -20,7 +20,7 @@
 
 import { LoggerService } from '../Logger'
 import { EventEmitter }  from 'events'
-import { MotifServerConfig } from './MOTIFMockServerCommons'
+import { MotifServerConfig, LoggerTransport } from './MOTIFMockServerCommons'
 import { UIInput } from '../ui-components/UIInput'
 import { UIToggle } from '../ui-components/UIToggle'
 
@@ -125,7 +125,7 @@ export class MOTIFServerConfigUI {
   }
 
   getConfiguration():MotifServerConfig{
-    let ret = {
+    let ret:MotifServerConfig = {
       port: this.portNumber,
       isMockEnabled: this.isMockEnabled,
       mockModulePath: this.mockModulePath,

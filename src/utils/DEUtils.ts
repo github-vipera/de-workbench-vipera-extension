@@ -22,7 +22,7 @@ export class DEUtils {
       let x = await execService.runExec('.', 'de-cli');
       return true;
     } catch (ex){
-      LoggerService.error("Check for DE CLI error: ", ex);
+      LoggerService.error("Check for DE CLI error: " + ex);
       return false;
     }
   }
