@@ -28,6 +28,8 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
 
   public constructor() {
     LoggerService.debug("Creating CordovaPluginsProvidersManager...")
+    console.log("Creating CordovaPluginsProvidersManager...");
+
     this.currentProjectRoot = WorkbenchServices.ProjectManager.getCurrentProjectPath();
 
     // subcribe for plugins events
@@ -55,6 +57,7 @@ export class DEPluginsProvider implements CordovaPluginsProviderService {
    * called from the Workbench
    **/
   async getCordovaPlugins(){
+    console.log("getCordovaPlugins called");
     var ret = [];
 
     if (DESDKRegistry.getInstance().isOfflineSDK()){

@@ -12,7 +12,7 @@ declare function require(moduleName: string): any;
 import { LoggerService } from './Logger'
 import { DEPluginsProviderFactory } from './pluginsProvider/DEPluginsProviderFactory'
 import { WorkbenchServices } from './WorkbenchServices'
-import { MotifMockServerProvider } from './MOTIFMockServer/MOTIFMockServer'
+//import { MotifMockServerProvider } from './MOTIFMockServer/MOTIFMockServer'
 import { DEUtils } from './utils/DEUtils'
 import { UINotifications } from './ui-components/UINotifications'
 
@@ -36,11 +36,13 @@ export default {
   },
 
   deferredActivation(){
-    console.log("DEWBEXT deferredActivation.");
-
+    LoggerService.perfLog("DEWBEXT deferredActivation.");
+    
+    /* TIME CONSUMING
     require('atom-package-deps').install('de-wb-vipera-extension', false).then(function(res){
       console.log("Dep packages installed.");
     })
+    */
 
     // add commands
     let commands = atom.commands.add('atom-workspace', {
@@ -50,7 +52,8 @@ export default {
     this.subscriptions = new CompositeDisposable();
     // add commands subs
     this.subscriptions.add(commands);
-
+    
+    LoggerService.perfLog("DEWBEXT deferredActivation.END");
   },
 
   deactivate () {
@@ -62,42 +65,50 @@ export default {
   },
 
   consumeCordovaPluginsProvider: function (dewebCordovaPluginsProviderManager) {
-    console.log("Consuming DE WB plugin manager...");
+    LoggerService.perfLog("Consuming DE WB plugin manager...");
     WorkbenchServices.CordovaPluginsProviderManager = dewebCordovaPluginsProviderManager;
+    DEPluginsProviderFactory.getInstance();
     WorkbenchServices.CordovaPluginsProviderManager.registerProviderFactory(DEPluginsProviderFactory.getInstance());
-    console.log("Consuming DE WB plugin manager...END");
+    LoggerService.perfLog("Consuming DE WB plugin manager...END");
   },
 
+  
   consumeLogger:function(logger){
-    console.log("Consuming DE WB Logger!!");
+    LoggerService.perfLog("Consuming DE WB Logger!!");
     WorkbenchServices.Logger = logger;
     LoggerService.setLogger(logger);
-    console.log("Consuming DE WB Logger END!");
+    LoggerService.perfLog("Consuming DE WB Logger END!");
   },
 
   consumeProjectManager:function(projectManager){
-    console.log("Consuming DE WB Project Manager!!");
+    LoggerService.perfLog("Consuming DE WB Project Manager!!");
     WorkbenchServices.ProjectManager = projectManager;
-    console.log("Consuming DE WB Project Manager END!");
+    LoggerService.perfLog("Consuming DE WB Project Manager END!");
   },
 
   consumeEvents:function(eventBus){
-    console.log("Consuming DE WB Event Bus!!");
+    LoggerService.perfLog("Consuming DE WB Event Bus!!");
     WorkbenchServices.Events = eventBus;
-    console.log("Consuming DE WB Event Bus END!");
+    LoggerService.perfLog("Consuming DE WB Event Bus END!");
   },
 
   consumeServerManager:function(serverManager){
-    console.log("Consuming DE WB Server Manager!!");
+    LoggerService.perfLog("Consuming DE WB Server Manager!!");
     WorkbenchServices.ServerManager = serverManager;
-    WorkbenchServices.ServerManager.registerProvider(new MotifMockServerProvider)
-    console.log("Consuming DE WB Server Manager END!");
+    setTimeout(()=>{
+      LoggerService.perfLog("WB Server Manager registerProvider...");
+      let xx = require('./MOTIFMockServer/MOTIFMockServer').MotifMockServerProvider;
+      WorkbenchServices.ServerManager.registerProvider(new xx())
+      LoggerService.perfLog("WB Server Manager registerProvider...END");
+    }, 1);
+    //WorkbenchServices.ServerManager.registerProvider(new MotifMockServerProvider)
+    LoggerService.perfLog("Consuming DE WB Server Manager END!");
   },
 
   consumeExecutorService:function(executorService){
-    console.log("Consuming DE WB Executor Service!!");
+    LoggerService.perfLog("Consuming DE WB Executor Service!!");
     WorkbenchServices.ExecutorService = executorService;
-    console.log("Consuming DE WB Executor Service END!");
+    LoggerService.perfLog("Consuming DE WB Executor Service END!");
 
     if (this.needDECLICheck()){
       this.checkForDECli();
@@ -146,5 +157,5 @@ export default {
   needDECLICheck():boolean {
     return  atom.config.get('de-workbench-vipera-extension.DECCLICheck')
   }
-
+  
 }

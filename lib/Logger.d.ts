@@ -5,6 +5,7 @@ export declare class LoggerService {
     static debug(msg: string): void;
     static warn(msg: string): void;
     static error(msg: string): void;
+    static perfLog(msg: string): void;
 }
 export declare class DefaultTransport {
     private formatMsg(args);

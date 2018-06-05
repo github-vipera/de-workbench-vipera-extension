@@ -39,6 +39,10 @@ export class LoggerService {
     }
   }
 
+  public static perfLog(msg:string){
+    console.log(msg + " ["+ performance.now() + "]");
+  }
+
 }
 
 
